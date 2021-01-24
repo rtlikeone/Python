@@ -1,6 +1,6 @@
 import turtle
 import pandas
-from write_state_name import WriteStateName
+from compare_states import CompareStates
 from score import Score
 
 screen = turtle.Screen()
@@ -13,21 +13,31 @@ screen.addshape(image)
 turtle.shape(image)
 
 data = pandas.read_csv("50_states.csv")
-state_name = WriteStateName()
+all_states = data.state.to_list()
+
+state_name = CompareStates()
 score = Score()
 
-game_on = True
 guessed = []
 
-while game_on:
-    if len(guessed) == 49:
-        print("You've guessed them All.")
-        break
+while len(guessed) < 50:
 
     # Show pop-up box and get user input
     answer_state = screen.textinput(title=f"{score.score}/50 States Correct", prompt="What's another state's name?").title()
 
     compare_user_input = data[data.state == answer_state]
+
+    if answer_state == "Exit":
+        states_to_learn = []
+        for value in all_states:
+            if value not in guessed:
+                states_to_learn.append(value)
+
+        print(states_to_learn)
+        states_to_csv = pandas.DataFrame(states_to_learn)
+        states_to_csv.to_csv("states_to_learn.csv")
+        break
+
 
     if len(compare_user_input):
         state = compare_user_input.state
@@ -39,4 +49,4 @@ while game_on:
     else:
         print("Please type a correct State's name")
 
-turtle.mainloop()
+# turtle.mainloop()

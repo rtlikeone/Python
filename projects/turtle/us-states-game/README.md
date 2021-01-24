@@ -4,3 +4,4 @@
 # Use a loop to allow the user to keep guessing
 # Record the correct guesses in a list
 # Keep track of the score
+# Save missing states to a .csv

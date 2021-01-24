@@ -1,7 +1,7 @@
 from turtle import Turtle
 
 
-class WriteStateName(Turtle):
+class CompareStates(Turtle):
     def __init__(self):
         super().__init__()
 
