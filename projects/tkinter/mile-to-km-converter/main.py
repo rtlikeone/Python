@@ -2,10 +2,37 @@ import tkinter
 
 
 def reset_values():
+    """Reset the text field and answer output values.
+
+    The labels for the answer output as well as the value in the text field will be reset and
+    cleared after every new option selected with the radio-buttons.
+
+    Args:
+        None.
+
+    Returns:
+        - Empty text field
+        - Answer label reset to 0
+    """
     return input_field.delete(0, "end"), answer.config(text="0")
 
 
 def km_or_miles(radiobutton):
+    """Listens for which radio-button is selected.
+
+        After every radio-button selection this function will be triggered.
+        It checks for the "text" key in the tkinter.Radiobutton dictionary.
+
+        Args:
+            radiobutton: gets the "text" key value for the tkinter.Radiobutton (radiobutton["text"])
+
+        Returns:
+            - Calls reset_values()
+            - Edits the text labels for miles and km.
+            - Calls convert_distance() functions after the value is checked in a conditional statement.
+            - Places the new button on screen using the grid layout manager.
+
+        """
     miles_or_km = radiobutton["text"]
 
     if miles_or_km == "Miles to Km":
@@ -24,6 +51,20 @@ def km_or_miles(radiobutton):
 
 
 def convert_distance(check_selection="Miles to Km"):
+    """Converts miles to km and vice versa.
+
+        Gets called in the km_or_miles() function after the radio-button
+        value is checked in a conditional statement.
+        It uses a try/except ValueError block if string cannot be converted to float.
+
+        Args:
+            check_selection.
+
+        Returns:
+            - The calculated miles value.
+            - The calculated km value.
+            - "Invalid distance string if text field input is not equal to float"
+        """
     try:
         input_value = float(input_field.get())
         km = input_value * 1.609344
