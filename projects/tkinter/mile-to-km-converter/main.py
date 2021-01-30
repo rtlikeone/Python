@@ -7,12 +7,14 @@ def reset_values():
 
 def km_or_miles(radiobutton):
     miles_or_km = radiobutton["text"]
+
     if miles_or_km == "Miles to Km":
         reset_values()
         miles_label.config(text="Miles")
         km_label.config(text="Km")
         miles_button = tkinter.Button(text="Calculate", command=lambda: convert_distance(miles_or_km))
         miles_button.grid(column=1, row=3)
+
     elif miles_or_km == "Km to miles":
         reset_values()
         km_label.config(text="Miles")
@@ -26,6 +28,7 @@ def convert_distance(check_selection="Miles to Km"):
         input_value = float(input_field.get())
         km = input_value * 1.609344
         miles = input_value / 1.609344
+
         if check_selection == "Km to miles":
             return answer.config(text=f"{round(miles, 2)}")
         return answer.config(text=f"{round(km, 2)}")
