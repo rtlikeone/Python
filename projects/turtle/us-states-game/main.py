@@ -28,10 +28,13 @@ while len(guessed) < 50:
     compare_user_input = data[data.state == answer_state]
 
     if answer_state == "Exit":
-        states_to_learn = []
-        for value in all_states:
-            if value not in guessed:
-                states_to_learn.append(value)
+        # states_to_learn = []
+        # for value in all_states:
+        #     if value not in guessed:
+        #         states_to_learn.append(value)
+
+        # Conditional list comprehension. The above can be refactored like this:
+        states_to_learn = [state for state in all_states if state not in guessed]
 
         print(states_to_learn)
         states_to_csv = pandas.DataFrame(states_to_learn)
