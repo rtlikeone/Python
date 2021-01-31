@@ -1,5 +1,5 @@
 import tkinter
-
+import math
 
 # ---------------------------- CONSTANTS ------------------------------- #
 PINK = "#e2979c"
@@ -11,11 +11,33 @@ WORK_MIN = 25
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
 
-# ---------------------------- TIMER RESET ------------------------------- # 
 
-# ---------------------------- TIMER MECHANISM ------------------------------- # 
+# ---------------------------- TIMER RESET ------------------------------- #
+def reset_timer():
+    # window.after_cancel(ID)
+    canvas.itemconfig(timer_text, text="00:00")
 
-# ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
+
+# ---------------------------- TIMER MECHANISM ------------------------------- #
+def start_timer():
+    count_down(25 * 60)
+
+
+# ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
+def count_down(count):
+    minutes = math.floor(count / 60)
+    secondes = count % 60
+    if secondes < 10:
+        secondes = f"0{secondes}"
+    # To edit a piece of text in a canvas (update time display), it differs from editing a label (.config).
+    # For this we use a member of the Canvas class, the .itemconfig() member.
+    # It takes the timer_text here as an argument and updates the display with count.
+    # Which is than updated every 1000ms by calling count_down() recursively.
+    canvas.itemconfig(timer_text, text=f"{minutes}:{secondes}")
+    if count > 0:
+        # The .after(ms. func, *args) executes a command after a time delay.
+        window.after(1000, count_down, count - 1)
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = tkinter.Tk()
@@ -30,17 +52,17 @@ canvas = tkinter.Canvas(width=210, height=224, bg=YELLOW, highlightthickness=0)
 tomato_img = tkinter.PhotoImage(file="tomato.png")
 # Define x and y coors. And the image itself
 canvas.create_image(105, 112, image=tomato_img)
-# Add text to display at an x and y value.
-canvas.create_text(105, 130, text="00:00", fill="white", font=(FONT_NAME, 30, "bold"))
+# Add text to display at x and y coors.
+timer_text = canvas.create_text(105, 130, text="00:00", fill="white", font=(FONT_NAME, 30, "bold"))
 # Show our canvas on screen
 canvas.grid(column=1, row=1)
 
 # Timer text label
-timer_text = tkinter.Label(text="Timer", bg=YELLOW, fg=GREEN, font=(FONT_NAME, 45))
-timer_text.grid(column=1, row=0)
+timer_label = tkinter.Label(text="Timer", bg=YELLOW, fg=GREEN, font=(FONT_NAME, 45))
+timer_label.grid(column=1, row=0)
 
 # Start button
-start_bt = tkinter.Button(text="Start")
+start_bt = tkinter.Button(text="Start", command=start_timer)
 start_bt.grid(column=0, row=2)
 
 # Check mark label
@@ -48,7 +70,7 @@ check_mk = tkinter.Label(text="✔", bg=YELLOW, fg=GREEN, font=(FONT_NAME, 28, "
 check_mk.grid(column=1, row=3)
 
 # Reset button
-reset_bt = tkinter.Button(text="Reset")
+reset_bt = tkinter.Button(text="Reset", command=reset_timer)
 reset_bt.grid(column=2, row=2)
 
 
