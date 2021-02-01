@@ -93,7 +93,7 @@ window.config(padx=100, pady=50, bg=YELLOW)
 # bg of canvas
 canvas = tkinter.Canvas(width=210, height=224, bg=YELLOW, highlightthickness=0)
 # PhotoImage reads through a file to get hold of the image
-tomato_img = tkinter.PhotoImage(file="/home/green/Documents/programming/python/projects/pomodoro/tomato.png")
+tomato_img = tkinter.PhotoImage(file="tomato.png")
 # Define x and y coors. And the image itself
 canvas.create_image(105, 112, image=tomato_img)
 # Add text to display at x and y coors.
