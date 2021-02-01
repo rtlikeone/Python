@@ -37,14 +37,14 @@ def start_timer():
     long_break_sec = int(LONG_BREAK_MIN * 60)
 
     if reps % 8 == 0:
+        playsound(ALARM)
         count_down(long_break_sec)
         timer_label.config(text="Break", fg=RED)
-        playsound(ALARM)
         print(f"LONG break! reps: {reps}")
     elif reps % 2 == 0:
+        playsound(ALARM)
         count_down(short_break_sec)
         timer_label.config(text="Break", fg=PINK)
-        playsound(ALARM)
         print(f"SHORT break! reps: {reps}")
     else:
         count_down(work_sec)
