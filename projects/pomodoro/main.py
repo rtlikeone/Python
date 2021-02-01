@@ -88,6 +88,7 @@ window = tkinter.Tk()
 window.title("Pomodoro")
 # bg of window
 window.config(padx=100, pady=50, bg=YELLOW)
+window.resizable(False, False)
 
 # Create canvas
 # bg of canvas
