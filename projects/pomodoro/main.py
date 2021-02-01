@@ -1,5 +1,6 @@
 import tkinter
 import math
+from playsound import playsound
 
 # ---------------------------- CONSTANTS ------------------------------- #
 PINK = "#e2979c"
@@ -7,9 +8,10 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 25
-SHORT_BREAK_MIN = 5
-LONG_BREAK_MIN = 20
+WORK_MIN = .25
+SHORT_BREAK_MIN = .15
+LONG_BREAK_MIN = .20
+ALARM = "alarm.mp3"
 reps = 0
 timer = None
 
@@ -37,10 +39,12 @@ def start_timer():
     if reps % 8 == 0:
         count_down(long_break_sec)
         timer_label.config(text="Break", fg=RED)
+        playsound(ALARM)
         print(f"LONG break! reps: {reps}")
     elif reps % 2 == 0:
         count_down(short_break_sec)
         timer_label.config(text="Break", fg=PINK)
+        playsound(ALARM)
         print(f"SHORT break! reps: {reps}")
     else:
         count_down(work_sec)
@@ -89,7 +93,7 @@ window.config(padx=100, pady=50, bg=YELLOW)
 # bg of canvas
 canvas = tkinter.Canvas(width=210, height=224, bg=YELLOW, highlightthickness=0)
 # PhotoImage reads through a file to get hold of the image
-tomato_img = tkinter.PhotoImage(file="tomato.png")
+tomato_img = tkinter.PhotoImage(file="/home/green/Documents/programming/python/projects/pomodoro/tomato.png")
 # Define x and y coors. And the image itself
 canvas.create_image(105, 112, image=tomato_img)
 # Add text to display at x and y coors.

@@ -79,6 +79,12 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-__pycache__
+
+# Build, dist, __pycache__ and more
+build/
+dist/
+__pycache__/
 excercises/
 .DS_Store
+
+
