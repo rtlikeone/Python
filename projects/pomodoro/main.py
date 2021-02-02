@@ -18,9 +18,25 @@ timer = None
 
 # ---------------------------- TIMER RESET ------------------------------- #
 def reset_timer():
+    """Reset the timer.
+
+    The time will be reset to 00:00 after every reset button click.
+
+    Args:
+        None.
+
+    Returns:
+        - Updates reps.
+        - Calls the window object: after_cancel method to cancel the timer delay.
+        - Calls the canvas object: itemconfig method which takes the timer_text as a parameter
+        and edits the text attribute for the canvas object.
+        - Updates the timer_label text attribute.
+        - Updates the check mark text attribute.
+    """
+
     global reps
-    
     reps = 0
+
     window.after_cancel(timer)
     canvas.itemconfig(timer_text, text="00:00")
     timer_label.config(text="Timer")
@@ -29,9 +45,20 @@ def reset_timer():
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
 def start_timer():
-    global reps
+    """Start the timer.
 
+    Args:
+        None.
+
+    Returns:
+        - Updates reps
+        - Calls the count_down() function for the subsequent amount of time equal
+        for the work, short and long break pre-defined intervals, whenever the condition is met.
+    """
+
+    global reps
     reps += 1
+
     work_sec = int(WORK_MIN * 60)
     short_break_sec = int(SHORT_BREAK_MIN * 60)
     long_break_sec = int(LONG_BREAK_MIN * 60)
@@ -54,6 +81,18 @@ def start_timer():
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
 def count_down(count):
+    """Start the timer.
+
+    Args:
+        count: the specified amount of time pre-defined for work, a short- and long break.
+
+    Returns:
+        - Handles the display for minutes and secondes when < 10.
+        - Updates the timer_label text attribute.
+        - Handles the delay for the timer.
+        - Updates the check mark text attribute.
+    """
+
     minutes = math.floor(count / 60)
     seconds = count % 60
 
@@ -64,21 +103,21 @@ def count_down(count):
     # To edit a piece of text in a canvas (update time display), it differs from editing a label (.config).
     # For this we use a member of the Canvas class, the .itemconfig() member.
     # It takes the timer_text here as an argument and updates the display with count.
-    # Which is than updated every 1000ms by calling count_down() recursively.
+
     canvas.itemconfig(timer_text, text=f"{minutes}:{seconds}")
     if count >= 0:
         global timer
         # The .after(ms. func, *args) executes a command after a time delay.
+        # The timer first start as None but through the .after() is updated every 1000ms.
+        # Which calls count_down() recursively and updates the count accordingly until the condition is False.
         timer = window.after(1000, count_down, count - 1)
     else:
         start_timer()
         checkmark = ""
 
+        # Update checkmark after every work rep.
         for _ in range(math.floor(reps / 2)):
             checkmark += "✔"
-
-        # if reps % 2 == 0:
-        #     checkmark += "✔"
 
         check_mk.config(text=checkmark)
 
