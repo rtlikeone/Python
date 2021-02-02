@@ -27,8 +27,8 @@ def reset_timer():
 
     Returns:
         - Updates reps.
-        - Calls the window object: after_cancel method to cancel the timer delay.
-        - Calls the canvas object: itemconfig method which takes the timer_text as a parameter
+        - Calls the window object: after_cancel() method to cancel the timer delay.
+        - Calls the canvas object: itemconfig() method which takes the timer_text as a parameter
         and edits the text attribute for the canvas object.
         - Updates the timer_label text attribute.
         - Updates the check mark text attribute.
@@ -87,7 +87,7 @@ def count_down(count):
         count: the specified amount of time pre-defined for work, a short- and long break.
 
     Returns:
-        - Handles the display for minutes and secondes when < 10.
+        - Handles the display for minutes and seconds when < 10.
         - Updates the timer_label text attribute.
         - Handles the delay for the timer.
         - Updates the check mark text attribute.
