@@ -3,15 +3,16 @@ import string
 import random
 
 
+# ---------------------------- CONSTANTS ------------------------------- #
+ALPHABET_LOWER = string.ascii_lowercase
+ALPHABET_UPPER = string.ascii_uppercase
+LETTERS = list(ALPHABET_LOWER + ALPHABET_UPPER)
+NUMS = list(range(10))
+SPECIAL_CHARS = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")"]
+NUMS_CHARS = NUMS + LETTERS + SPECIAL_CHARS
+
+
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
-alphabet_lower = string.ascii_lowercase
-alphabet_upper = string.ascii_uppercase
-letters = list(alphabet_lower + alphabet_upper)
-nums = list(range(10))
-special_chars = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")"]
-nums_chars = nums + letters + special_chars
-
-
 def gen_password():
     """Generate random password.
 
@@ -27,12 +28,14 @@ def gen_password():
     password_input.delete(0, "end")
     password = ""
     for i in range(20):
-        random_char = random.choice(nums_chars)
+        random_char = random.choice(NUMS_CHARS)
         password += str(random_char)
     password_input.insert(0, password)
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
+def save_password():
+    pass
 
 
 # ---------------------------- UI SETUP ------------------------------- #
