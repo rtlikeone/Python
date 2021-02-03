@@ -35,7 +35,27 @@ def gen_password():
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save_password():
-    pass
+    """Save data.
+
+    Gets called whenever the add button is clicked. All the data entered in
+    the website, username/email and password fields, are appended to data.txt.
+
+    Args:
+        None.
+
+    Returns:
+        - Opens the data.txt file using the .open() method and
+        appends all the data gathered, using the .get() method, into this file.
+        - Handles how the values that are entered are deleted from the
+        input fields using the delete() method, after the add button is clicked.
+    """
+    with open("data.txt", mode="a+") as datafile:
+        website = website_input.get()
+        email = email_username_input.get()
+        password = password_input.get()
+        datafile.write(f"{website} | {email} | {password}\n")
+        website_input.delete(0, "end")
+        password_input.delete(0, "end")
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -71,7 +91,7 @@ password_input.grid(column=1, row=3, sticky="EW")
 # Buttons
 generate_password = tkinter.Button(text="Generate password", command=gen_password)
 generate_password.grid(column=2, row=3, sticky="EW")
-add_new_user = tkinter.Button(text="Add", width=35)
+add_new_user = tkinter.Button(text="Add", width=35, command=save_password)
 add_new_user.grid(column=1, row=4, columnspan=2, sticky="EW")
 
 
