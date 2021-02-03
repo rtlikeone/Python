@@ -2,15 +2,16 @@ import tkinter
 from tkinter import messagebox
 import string
 import random
+import pyperclip
 
 
 # ---------------------------- CONSTANTS ------------------------------- #
 ALPHABET_LOWER = string.ascii_lowercase
 ALPHABET_UPPER = string.ascii_uppercase
-LETTERS = list(ALPHABET_LOWER + ALPHABET_UPPER)
+ALPHABET = list(ALPHABET_LOWER + ALPHABET_UPPER)
 NUMS = list(range(10))
 SPECIAL_CHARS = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")"]
-NUMS_CHARS = NUMS + LETTERS + SPECIAL_CHARS
+NUMS_CHARS = ALPHABET + NUMS + SPECIAL_CHARS
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -32,6 +33,7 @@ def gen_password():
         random_char = random.choice(NUMS_CHARS)
         password += str(random_char)
     password_input.insert(0, password)
+    pyperclip.copy(password)
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
@@ -58,7 +60,7 @@ def save_password():
 
     if len(website) == 0 or len(password) == 0:
         messagebox.showinfo(
-            title="Empty field found",
+            title="Oops..",
             message="Please don't leave any fields empty.")
     else:
         # Output is a Boolean. Ok=True, Cancel=False
