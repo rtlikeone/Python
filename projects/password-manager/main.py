@@ -1,4 +1,5 @@
 import tkinter
+from tkinter import messagebox
 import string
 import random
 
@@ -44,18 +45,33 @@ def save_password():
         None.
 
     Returns:
+        - Shows a message box if empty fields detected.
+        - Show a message box to confirm saving data to .txt file.
         - Opens the data.txt file using the .open() method and
         appends all the data gathered, using the .get() method, into this file.
         - Handles how the values that are entered are deleted from the
         input fields using the delete() method, after the add button is clicked.
     """
-    with open("data.txt", mode="a+") as datafile:
-        website = website_input.get()
-        email = email_username_input.get()
-        password = password_input.get()
-        datafile.write(f"{website} | {email} | {password}\n")
-        website_input.delete(0, "end")
-        password_input.delete(0, "end")
+    website = website_input.get()
+    email = email_username_input.get()
+    password = password_input.get()
+
+    if len(website) == 0 or len(password) == 0:
+        messagebox.showinfo(
+            title="Empty field found",
+            message="Please don't leave any fields empty.")
+    else:
+        # Output is a Boolean. Ok=True, Cancel=False
+        is_ok = messagebox.askokcancel(
+            title=website,
+            message=f"These are the details entered:\n"
+                    f"Email: {email}\nPassword: {password}\nIs it ok to save?")
+
+        if is_ok:
+            with open("data.txt", mode="a+") as datafile:
+                datafile.write(f"{website} | {email} | {password}\n")
+                website_input.delete(0, "end")
+                password_input.delete(0, "end")
 
 
 # ---------------------------- UI SETUP ------------------------------- #
