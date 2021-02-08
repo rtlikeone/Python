@@ -2,7 +2,8 @@ import tkinter
 from tkinter import messagebox
 import string
 import random
-import pyperclip
+# import pyperclip
+import json
 
 
 # ---------------------------- CONSTANTS ------------------------------- #
@@ -25,7 +26,6 @@ def gen_password():
         - Handles the string value in the password input field after every "generate password" button click.
         - A password string consisting of lower- and uppercase letters, numbers and
         special characters (0-9) for up to 20 characters long.
-
     """
     password_input.delete(0, "end")
     password = ""
@@ -33,7 +33,7 @@ def gen_password():
         random_char = random.choice(NUMS_CHARS)
         password += str(random_char)
     password_input.insert(0, password)
-    pyperclip.copy(password)
+    # pyperclip.copy(password)
 
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
@@ -57,23 +57,81 @@ def save_password():
     website = website_input.get()
     email = email_username_input.get()
     password = password_input.get()
+    new_data = {
+        website: {
+            "email": email,
+            "password": password
+        }
+    }
 
     if len(website) == 0 or len(password) == 0:
+        # https://www.kite.com/python/docs/tkinter.messagebox.showinfo
         messagebox.showinfo(
             title="Oops..",
             message="Please don't leave any fields empty.")
     else:
-        # Output is a Boolean. Ok=True, Cancel=False
-        is_ok = messagebox.askokcancel(
-            title=website,
-            message=f"These are the details entered:\n"
-                    f"Email: {email}\nPassword: {password}\nIs it ok to save?")
+        # Ask if operation should proceed; return true if the answer is ok
+        # https://www.kite.com/python/docs/tkinter.messagebox.askokcancel
+        # Output is a Boolean => buttons clicked: Ok=True, Cancel=False
+        # is_ok = messagebox.askokcancel(
+        #     title=website,
+        #     message=f"These are the details entered:\n"
+        #             f"Email: {email}\nPassword: {password}\nIs it ok to save?")
 
-        if is_ok:
-            with open("data.txt", mode="a+") as datafile:
-                datafile.write(f"{website} | {email} | {password}\n")
-                website_input.delete(0, "end")
-                password_input.delete(0, "end")
+        # if is_ok:
+            # To .txt file
+            # with open("data.txt", mode="a+") as datafile:
+            #     datafile.write(f"{website} | {email} | {password}\n")
+            #     website_input.delete(0, "end")
+            #     password_input.delete(0, "end")
+
+        try:
+            # To .JSON file
+            with open("data.json", mode="r") as datafile:
+                # Read old date
+                data = json.load(datafile)
+                # Update old data with new data
+                data.update(new_data)
+        except FileNotFoundError:
+            with open("data.json", mode="w") as datafile:
+                # Write to file
+                json.dump(new_data, datafile, indent=4)
+        else:
+            data.update(new_data)
+
+            with open("data.json", mode="w") as datafile:
+                # Write to file
+                json.dump(data, datafile, indent=4)
+        finally:
+            website_input.delete(0, "end")
+            password_input.delete(0, "end")
+
+
+# ---------------------------- FIND ACCOUNT ------------------------------- #
+def find_password():
+    """Search through user accounts saved in data.json.
+
+    Find user account based on input field value and show credentials in a pop-up window.
+
+    Args: None.
+
+    Returns: User credentials.
+    """
+    website = website_input.get()
+
+    try:
+        with open("data.json", mode="r") as user_data:
+            data = json.load(user_data)
+            ws = website
+            uname = data[website]["email"]
+            psswd = data[website]["password"]
+    except (KeyError, FileNotFoundError):
+        messagebox.showinfo(title="Error", message="No Data Found.")
+    else:
+        messagebox.showinfo(
+            title=f"{ws}",
+            message=f"Email: {uname}\n"
+                    f"Password: {psswd}")
 
 
 # ---------------------------- UI SETUP ------------------------------- #
@@ -97,7 +155,7 @@ password_label.grid(column=0, row=3, sticky="W")
 
 # Entries
 website_input = tkinter.Entry()
-website_input.grid(column=1, row=1, columnspan=2, sticky="EW")
+website_input.grid(column=1, row=1, sticky="EW")
 website_input.focus()
 email_username_input = tkinter.Entry()
 email_username_input.grid(column=1, row=2, columnspan=2, sticky="EW")
@@ -107,6 +165,8 @@ password_input = tkinter.Entry()
 password_input.grid(column=1, row=3, sticky="EW")
 
 # Buttons
+find_account = tkinter.Button(text="Search", command=find_password)
+find_account.grid(column=2, row=1, sticky="EW")
 generate_password = tkinter.Button(text="Generate password", command=gen_password)
 generate_password.grid(column=2, row=3, sticky="EW")
 add_new_user = tkinter.Button(text="Add", width=35, command=save_password)
