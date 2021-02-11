@@ -10,4 +10,5 @@ UI SETUP
 - Images: front and back of the flash card.
 
 LOGIC
-- 
+- Logic for next word to show cards (FR, EN)
+- Logic for 3kms delay before card flips
