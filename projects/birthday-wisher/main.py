@@ -4,9 +4,9 @@ import random
 import smtplib
 
 
-email = "****"
-password = "****"
-to_addr = "****"
+email = "romsontesting@gmail.com"
+password = "Welcome2021*"
+to_addr = "info@vbel.nl"
 
 now = dt.datetime.now()
 year = now.year
@@ -32,11 +32,7 @@ with open(f"letter_templates/letter_{random.randint(1, 3)}.txt", mode="r") as so
             print(name)
             # Replace name
             letter_to_send = source_contents.replace("[NAME]", name)
-
-            # Write to new .txt output file
-            with open(f"./ReadyToSend/letter_for_{name}.txt", mode="w") as output_letter:
-                output_letter.write(letter_to_send)
-                mssg = f"Subject: Happy Birhtday!\n\n{letter_to_send}"
+            mssg = f"Subject: Happy Birhtday!\n\n{letter_to_send}"
 
             # Send email
             with smtplib.SMTP("smtp.gmail.com") as connection:
