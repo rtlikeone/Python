@@ -84,7 +84,7 @@ venv.bak/
 build/
 dist/
 __pycache__/
-excercises/
+exercises/
 .DS_Store
 
 
