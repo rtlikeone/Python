@@ -12,7 +12,7 @@ try:
 except FileNotFoundError:
     data = pandas.read_csv("data.csv")
 
-# Create dict from our .csv file
+# --- Create dict from our .csv file
 # Converts the dict into a list: orient="records" => list like [{column -> value}, … , {column -> value}]
 # https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_dict.html
 to_learn = data.to_dict(orient="records")

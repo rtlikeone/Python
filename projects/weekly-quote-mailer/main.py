@@ -2,10 +2,10 @@ import smtplib
 from timeclass import Time
 import random
 
-FROM_ADDR = "*****"
-TO_ADDR = "*****"
-EMAIL = "*****"
-PASSWORD = "*****"
+FROM_ADDR = "****"
+TO_ADDR = "****"
+EMAIL = "****"
+PASSWORD = "****"
 
 time = Time()
 
