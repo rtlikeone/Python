@@ -4,9 +4,9 @@ import random
 import smtplib
 
 
-email = "romsontesting@gmail.com"
-password = "Welcome2021*"
-to_addr = "info@vbel.nl"
+email = "***"
+password = "***"
+to_addr = "***"
 
 now = dt.datetime.now()
 year = now.year
