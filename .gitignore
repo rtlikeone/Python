@@ -87,5 +87,6 @@ __pycache__/
 exercises/
 exercises
 .DS_Store
-
+api_data/
+api_data
 
